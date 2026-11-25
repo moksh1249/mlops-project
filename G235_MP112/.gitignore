@@ -1,0 +1,12 @@
+# data is tracked by DVC, not git
+/data/raw/train.csv
+/data/raw/later.csv
+# MLflow model files (the tool only reads mlflow.db)
+mlruns/
+mlartifacts/
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/

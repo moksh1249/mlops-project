@@ -1,0 +1,56 @@
+# MP112 findings --- filled in by `python -m ev_energy.findings`.
+# Every value below was computed by code in src/ev_energy/.
+
+group_id: G235
+problem_id: MP112
+data_issues:
+  leaking_column:
+    present: false
+    column: null
+  unit_mixup:
+    present: true
+    column: vehicle_age_yr
+    group_value: Residential
+    factor: 12
+  sentinel_value:
+    present: true
+    column: queue_before
+    value: -999
+    count: 50
+  duplicate_rows:
+    present: true
+    count: 32
+  stuck_sensor:
+    present: false
+    column: null
+    start_date: null
+    end_date: null
+  target_typos:
+    present: true
+    count: 11
+  spelling_variants:
+    present: true
+    column: vehicle
+    true_levels: 3
+tracking:
+  experiment_name: mp112-ev-energy
+  best_run_id: edaf1ceb898f47c3b10e3cd86eb01620
+  registered_model_name: mp112-ev-energy-model
+  champion_version: 2
+monitoring:
+  psi:
+    battery_start_pct: 0.027
+    session_minutes: 3.2988
+    charger_kw: 0.0339
+    temp_c: 0.0643
+    vehicle_age_yr: 0.0282
+    queue_before: 0.0556
+  most_drifted_feature: session_minutes
+  mae_by_group:
+    Highway: 2.1069
+    Mall: 2.1379
+    Residential: 16.5719
+  worst_served_group: Residential
+  mae_v1_on_check: 4.9684
+  mae_v2_on_check: 2.0473
+  decision: promote

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mp112-api
+  labels:
+    app: mp112-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mp112-api
+  template:
+    metadata:
+      labels:
+        app: mp112-api
+    spec:
+      containers:
+        - name: mp112-api
+          image: mp112-api:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20

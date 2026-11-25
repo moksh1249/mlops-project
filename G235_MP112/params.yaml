@@ -1,0 +1,70 @@
+data:
+  train: data/raw/train.csv
+  later: data/raw/later.csv
+  holdout: data/raw/holdout_features.csv
+  date_column: date
+  id_column: record_id
+  target: energy_kwh
+  group_column: station_type
+
+features:
+  numeric:
+    - battery_start_pct
+    - session_minutes
+    - charger_kw
+    - temp_c
+    - vehicle_age_yr
+    - queue_before
+  categorical:
+    - vehicle
+    - station_type
+
+cleaning:
+  sentinel_values: [-1, -99, -999, -9999, 999, 9999]
+  sentinel_min_repeats: 5
+  unit_factors_to_try: [10, 12, 60, 100, 1000]
+  unit_ratio_tolerance: 0.25
+  target_typo_factor: 10
+  stuck_min_days: 7
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: mp112-ev-energy
+  registered_model_name: mp112-ev-energy-model
+
+training:
+  random_state: 42
+  cv_folds: 5
+  # v1 candidates; each one becomes its own MLflow run. Best CV MAE wins.
+  candidates:
+    - name: ridge
+      model: ridge
+      params: {alpha: 1.0}
+    - name: ridge_interact
+      model: ridge_interactions
+      params: {alpha: 1.0}
+    - name: rf_300
+      model: random_forest
+      params: {n_estimators: 300, min_samples_leaf: 2}
+    - name: gbr_shallow
+      model: gradient_boosting
+      params: {n_estimators: 300, learning_rate: 0.05, max_depth: 3}
+    - name: gbr_deep
+      model: gradient_boosting
+      params: {n_estimators: 500, learning_rate: 0.03, max_depth: 4, subsample: 0.8}
+
+monitoring:
+  psi_bins: 10
+  later_train_fraction: 0.7
+  promotion_min_improvement: 0.08
+  # v2 may weight later.csv rows more than the old train rows (newer regime).
+  # The weight is picked by a time-ordered inner split of the first 70% only,
+  # never by the last-30% check rows.
+  v2_later_weights: [1, 3, 5, 10, 20]
+  v2_inner_val_fraction: 0.3
+
+outputs:
+  model_path: models/model.joblib
+  findings: reports/findings.yaml
+  predictions: predictions/holdout_predictions.csv
+  reports_dir: reports

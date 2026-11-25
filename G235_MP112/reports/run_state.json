@@ -1,0 +1,140 @@
+{
+  "issues": {
+    "leaking_column": {
+      "present": false,
+      "column": null
+    },
+    "unit_mixup": {
+      "present": true,
+      "column": "vehicle_age_yr",
+      "group_value": "Residential",
+      "factor": 12,
+      "observed_mean_ratio": 11.406,
+      "observed_max_ratio": 12.0
+    },
+    "sentinel_value": {
+      "present": true,
+      "column": "queue_before",
+      "value": -999,
+      "count": 50
+    },
+    "duplicate_rows": {
+      "present": true,
+      "count": 32
+    },
+    "stuck_sensor": {
+      "present": false,
+      "column": null,
+      "start_date": null,
+      "end_date": null,
+      "longest_run_days": 2
+    },
+    "target_typos": {
+      "present": true,
+      "count": 11,
+      "threshold": 56.75,
+      "gap_ratio": 6.15
+    },
+    "spelling_variants": {
+      "present": true,
+      "column": "vehicle",
+      "true_levels": 3,
+      "raw_levels": 20,
+      "mapping": {
+        "two_wheeler": "two_wheeler",
+        "car": "car",
+        "three_wheeler": "three_wheeler",
+        "car.": "car",
+        "THREE_WHEELER": "three_wheeler",
+        "car ": "car",
+        "three wheeler": "three_wheeler",
+        "Three_Wheeler": "three_wheeler",
+        " car": "car",
+        "CAR": "car",
+        "two wheeler": "two_wheeler",
+        "two.": "two_wheeler",
+        " three_wheeler": "three_wheeler",
+        "two_wheeler ": "two_wheeler",
+        "TWO_WHEELER": "two_wheeler",
+        " two_wheeler": "two_wheeler",
+        "Car": "car",
+        "thr.": "three_wheeler",
+        "three_wheeler ": "three_wheeler",
+        "Two_Wheeler": "two_wheeler"
+      }
+    }
+  },
+  "v1": {
+    "run_id": "edaf1ceb898f47c3b10e3cd86eb01620",
+    "version": 1,
+    "candidate": {
+      "name": "ridge_interact",
+      "model": "ridge_interactions",
+      "params": {
+        "alpha": 1.0
+      }
+    },
+    "cv_mae": 1.661650257224851
+  },
+  "champion_version": 2,
+  "all_v1_runs": [
+    {
+      "name": "ridge",
+      "run_id": "c72cdc6799e541eb818f598d843af096",
+      "cv_mae": 1.8164999294483668
+    },
+    {
+      "name": "ridge_interact",
+      "run_id": "edaf1ceb898f47c3b10e3cd86eb01620",
+      "cv_mae": 1.661650257224851
+    },
+    {
+      "name": "rf_300",
+      "run_id": "0a4e607f38ad42dc8a9b5e850b68345b",
+      "cv_mae": 2.4765385326436515
+    },
+    {
+      "name": "gbr_shallow",
+      "run_id": "c84f66c8732b4681907c00b524bb8236",
+      "cv_mae": 2.117587372553988
+    },
+    {
+      "name": "gbr_deep",
+      "run_id": "186e88dcd12b4888a931c881a62a9064",
+      "cv_mae": 2.0529962535737902
+    }
+  ],
+  "monitoring": {
+    "psi": {
+      "battery_start_pct": 0.027,
+      "session_minutes": 3.2988,
+      "charger_kw": 0.0339,
+      "temp_c": 0.0643,
+      "vehicle_age_yr": 0.0282,
+      "queue_before": 0.0556
+    },
+    "most_drifted_feature": "session_minutes",
+    "mae_by_group": {
+      "Highway": 2.1069,
+      "Mall": 2.1379,
+      "Residential": 16.5719
+    },
+    "worst_served_group": "Residential",
+    "mae_v1_on_check": 4.9684,
+    "mae_v2_on_check": 2.0473,
+    "improvement": 0.5879,
+    "decision": "promote"
+  },
+  "v2": {
+    "run_id": "62abd055119d4571a2ed6b698d8cedd7",
+    "version": 2,
+    "later_row_weight": 20.0,
+    "inner_weight_scores": {
+      "1": 3.1018,
+      "3": 2.589,
+      "5": 2.3671,
+      "10": 2.1257,
+      "20": 1.9896
+    }
+  }
+}
